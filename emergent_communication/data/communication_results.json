@@ -1,0 +1,25 @@
+{
+  "episodes": 600,
+  "coordination_accuracy_pct": 100.0,
+  "mutual_information_bits": 1.94,
+  "topographic_similarity_rho": 0.771,
+  "proto_vocabulary": {
+    "Gate 0 (North)": [
+      0.125,
+      0.702
+    ],
+    "Gate 1 (South)": [
+      0.825,
+      0.218
+    ],
+    "Gate 2 (East)": [
+      0.654,
+      0.803
+    ],
+    "Gate 3 (West)": [
+      0.263,
+      0.139
+    ]
+  },
+  "passed": true
+}

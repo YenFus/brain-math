@@ -1,0 +1,7 @@
+{
+  "true_belief_accuracy_no_tom": 100.0,
+  "true_belief_accuracy_tom": 100.0,
+  "false_belief_accuracy_no_tom": 0.0,
+  "false_belief_accuracy_tom": 100.0,
+  "passed": true
+}

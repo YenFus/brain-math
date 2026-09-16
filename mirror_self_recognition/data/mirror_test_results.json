@@ -1,0 +1,29 @@
+{
+  "results": {
+    "mirror_ablated": {
+      "description": "Ablated Agent in Front of Mirror (No Efference Copy)",
+      "reversal_rate_pct": 78.3,
+      "mean_exafference": 1.43,
+      "mean_ne_surprise": 2.75
+    },
+    "mirror_with_cd": {
+      "description": "Intact Agent in Front of Mirror (With Efference Copy)",
+      "reversal_rate_pct": 0.0,
+      "mean_exafference": 0.113,
+      "mean_ne_surprise": 1.17
+    },
+    "other_ablated": {
+      "description": "Ablated Agent Facing External Stranger",
+      "reversal_rate_pct": 94.3,
+      "mean_exafference": 2.042,
+      "mean_ne_surprise": 3.39
+    },
+    "other_with_cd": {
+      "description": "Intact Agent Facing External Stranger",
+      "reversal_rate_pct": 94.3,
+      "mean_exafference": 2.042,
+      "mean_ne_surprise": 3.39
+    }
+  },
+  "passed": true
+}
