@@ -1,5 +1,5 @@
 """
-agent_policy.py - The Live Self-Modifiable Agent Policy (Gen 2).
+agent_policy.py - The Live Self-Modifiable Agent Policy (Gen 1).
 Evolved via Gödel Agent Self-Editor with sandbox verification.
 """
 
@@ -9,11 +9,11 @@ import numpy as np
 
 
 class AgentPolicy:
-    VERSION = "1.2.0"
+    VERSION = "1.1.0"
 
-    deliberation_depth: int = 6
-    base_exploration_temp: float = 0.55
-    conflict_threshold: float = 0.44
+    deliberation_depth: int = 5
+    base_exploration_temp: float = 0.60
+    conflict_threshold: float = 0.47
     confidence_decay: float = 0.96
 
     @classmethod
