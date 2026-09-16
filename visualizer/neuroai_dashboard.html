@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuro-AI Biological Embodiment & Connectome Laboratory</title>
+  <script src="data.js"></script>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --panel-bg: #111827;
+      --panel-border: #1f293d;
+      --accent-cyan: #00f0ff;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--accent-cyan), #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      background: #0d1322;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--panel-border);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--accent-cyan);
+      color: #04101e;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      padding: 16px;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .view-panel {
+      flex: 3;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .telemetry-panel {
+      flex: 1.2;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #0f172a 0%, #060911 100%);
+    }
+
+    canvas {
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    .controls-bar {
+      background: #0d1424;
+      border-top: 1px solid var(--panel-border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: var(--text-main);
+      border: 1px solid #334155;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .btn:hover {
+      background: #334155;
+      border-color: var(--accent-cyan);
+    }
+
+    .btn-action {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    .btn-action:hover {
+      background: var(--accent-cyan);
+      color: #000;
+    }
+
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: var(--accent-rose);
+      color: var(--accent-rose);
+    }
+
+    .btn-danger:hover {
+      background: var(--accent-rose);
+      color: #fff;
+    }
+
+    .stat-card {
+      background: #0d1322;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .progress-bar-bg {
+      height: 6px;
+      background: #1f293d;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent-cyan);
+      transition: width 0.1s linear;
+    }
+
+    .neuron-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .neuron-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
+
+    .neuron-name {
+      width: 45px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .neuron-meter {
+      flex: 1;
+      height: 12px;
+      background: #172033;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .neuron-fill {
+      height: 100%;
+      background: var(--accent-purple);
+      transition: width 0.05s ease;
+    }
+
+    .neuron-val {
+      width: 45px;
+      text-align: right;
+      color: #cbd5e1;
+      font-size: 0.72rem;
+    }
+
+    .overlay-info {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(13, 19, 34, 0.85);
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1>NEURO-AI EMBODIMENT DASHBOARD</h1>
+      <span class="badge">Apple Silicon Native • &lt; 50MB RAM</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('exp1')">1. Embodied Organism</button>
+      <button class="tab-btn" onclick="switchTab('exp2')">2. Modular vs RL Pendulum</button>
+      <button class="tab-btn" onclick="switchTab('exp3')">3. C. elegans Connectome</button>
+      <button class="tab-btn" onclick="switchTab('synthesis')">4. Synthesis Organism</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Visualization Viewport -->
+    <div class="view-panel">
+      <div class="canvas-container" id="canvasContainer">
+        <canvas id="simCanvas" width="700" height="520"></canvas>
+        <div class="overlay-info" id="overlayInfo">Status: Active</div>
+      </div>
+
+      <div class="controls-bar">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="btn btn-action" id="playBtn" onclick="togglePlay()">Pause</button>
+          <button class="btn" onclick="resetSim()">Reset</button>
+          <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 10px;">Speed:</span>
+          <button class="btn" onclick="setSpeed(1)">1x</button>
+          <button class="btn" onclick="setSpeed(2)">2x</button>
+          <button class="btn" onclick="setSpeed(4)">4x</button>
+        </div>
+
+        <div id="tabSpecificControls" style="display: flex; gap: 8px;">
+          <!-- Dynamically injected tab controls -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Side Panel -->
+    <div class="telemetry-panel" id="telemetryPanel">
+      <h3 style="font-size: 0.95rem; letter-spacing: 0.5px; border-bottom: 1px solid var(--panel-border); padding-bottom: 8px;">
+        TELEMETRY METRICS
+      </h3>
+
+      <div class="stat-card">
+        <div class="stat-label">Step / Time</div>
+        <div class="stat-val" id="statStep">0</div>
+      </div>
+
+      <div id="dynamicStats">
+        <!-- Injected depending on active tab -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const bundle = window.TELEMETRY_BUNDLE || {};
+    let activeTab = 'exp1';
+    let isPlaying = true;
+    let playbackSpeed = 1;
+    let currentStepIdx = 0;
+    let animFrameId = null;
+
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const overlay = document.getElementById('overlayInfo');
+
+    function switchTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      currentStepIdx = 0;
+      updateControlsAndStats();
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      document.getElementById('playBtn').textContent = isPlaying ? 'Pause' : 'Play';
+      document.getElementById('playBtn').classList.toggle('btn-action', isPlaying);
+    }
+
+    function resetSim() {
+      currentStepIdx = 0;
+    }
+
+    function setSpeed(s) {
+      playbackSpeed = s;
+    }
+
+    function updateControlsAndStats() {
+      const controlsDiv = document.getElementById('tabSpecificControls');
+      const statsDiv = document.getElementById('dynamicStats');
+
+      if (activeTab === 'exp1') {
+        controlsDiv.innerHTML = `
+          <button class="btn btn-action" onclick="stimulate('drop_food')">🍏 Drop Food</button>
+          <button class="btn btn-danger" onclick="stimulate('fluid_shock')">🌊 Fluid Swirl</button>
+        `;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Glucose / Hunger</div>
+            <div class="stat-val" id="valGlucose">1.00</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="barGlucose" style="width: 100%;"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Dopamine Level</div>
+            <div class="stat-val" id="valDopamine" style="color: var(--accent-amber);">1.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Affect / Emotion</div>
+            <div class="stat-val" id="valEmotion" style="color: var(--accent-green); font-size: 1.0rem;">Curious</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cerebellar Motor Error</div>
+            <div class="stat-val" id="valCerError" style="font-size: 1.0rem;">0.000</div>
+          </div>
+        `;
+      } else if (activeTab === 'exp2') {
+        controlsDiv.innerHTML = `
+          <button class="btn btn-danger" onclick="stimulate('wind_shock')">💨 18N Wind Gust</button>
+          <button class="btn btn-action" onclick="stimulate('mass_double')">🏋️ Double Pole Mass</button>
+        `;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Monolithic RL Angle</div>
+            <div class="stat-val" id="valRLAngle" style="color: var(--accent-rose);">0.0°</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Bio-Modular Triad Angle</div>
+            <div class="stat-val" id="valBioAngle" style="color: var(--accent-cyan);">0.0°</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Norepinephrine Surge</div>
+            <div class="stat-val" id="valNE" style="color: var(--accent-amber);">1.00</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="barNE" style="width: 20%; background: var(--accent-amber);"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cerebellar Inverse Correction</div>
+            <div class="stat-val" id="valCerCorr">0.00 N</div>
+          </div>
+        `;
+      } else if (activeTab === 'exp3') {
+        controlsDiv.innerHTML = `
+          <button class="btn btn-danger" onclick="stimulate('tap_head')">👆 Tap Head (ALM Escape)</button>
+          <button class="btn btn-action" onclick="stimulate('tap_tail')">👉 Tap Tail (PLM Sprint)</button>
+        `;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Locomotion State</div>
+            <div class="stat-val" id="valWormState" style="color: var(--accent-green);">FORWARD CRAWL</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Connectome Potentials (mV)</div>
+            <div class="neuron-chart" style="margin-top: 8px;">
+              <div class="neuron-row"><span class="neuron-name">ALM</span><div class="neuron-meter"><div class="neuron-fill" id="barALM" style="background: var(--accent-rose);"></div></div><span class="neuron-val" id="vALM">-40</span></div>
+              <div class="neuron-row"><span class="neuron-name">AVA</span><div class="neuron-meter"><div class="neuron-fill" id="barAVA" style="background: var(--accent-amber);"></div></div><span class="neuron-val" id="vAVA">-40</span></div>
+              <div class="neuron-row"><span class="neuron-name">AVB</span><div class="neuron-meter"><div class="neuron-fill" id="barAVB" style="background: var(--accent-cyan);"></div></div><span class="neuron-val" id="vAVB">-40</span></div>
+              <div class="neuron-row"><span class="neuron-name">PVC</span><div class="neuron-meter"><div class="neuron-fill" id="barPVC" style="background: var(--accent-green);"></div></div><span class="neuron-val" id="vPVC">-40</span></div>
+            </div>
+          </div>
+        `;
+      } else if (activeTab === 'synthesis') {
+        controlsDiv.innerHTML = `
+          <button class="btn btn-action" onclick="stimulate('drop_food')">🍏 Attractant Pellet</button>
+        `;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Worm Head Position</div>
+            <div class="stat-val" id="valSynthPos" style="font-size: 1.0rem;">(0, 0)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Food Pellets Eaten</div>
+            <div class="stat-val" id="valSynthFood" style="color: var(--accent-green);">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Dopamine / NE</div>
+            <div class="stat-val" id="valSynthMod">1.0 / 1.0</div>
+          </div>
+        `;
+      }
+    }
+
+    let interactiveShock = null;
+    function stimulate(type) {
+      interactiveShock = { type: type, duration: 25 };
+    }
+
+    // ==========================================
+    // RENDER LOOPS
+    // ==========================================
+
+    function renderExp1(trajData) {
+      const stepData = trajData[currentStepIdx % trajData.length];
+      document.getElementById('statStep').textContent = `${stepData.step} / ${trajData[trajData.length-1].step}`;
+
+      // Update telemetry
+      document.getElementById('valGlucose').textContent = stepData.glucose.toFixed(2);
+      document.getElementById('barGlucose').style.width = `${Math.round(stepData.glucose * 100)}%`;
+      document.getElementById('valDopamine').textContent = stepData.dopamine.toFixed(2);
+      document.getElementById('valEmotion').textContent = stepData.emotion || 'Curiosity';
+      document.getElementById('valCerError').textContent = stepData.cerebellar_error.toFixed(4);
+
+      overlay.textContent = `Embodied Organism • Pos: (${stepData.x}, ${stepData.y}) • Food Eaten: ${stepData.food_count}`;
+
+      // Canvas clear
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Coordinate scaling (arena is 100x100 -> canvas 700x520)
+      const sx = canvas.width / 100;
+      const sy = canvas.height / 100;
+
+      // Draw obstacles
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.fillRect(40 * sx, 40 * sy, 20 * sx, 5 * sy);
+      ctx.strokeRect(40 * sx, 40 * sy, 20 * sx, 5 * sy);
+      ctx.fillRect(40 * sx, 55 * sy, 20 * sx, 5 * sy);
+      ctx.strokeRect(40 * sx, 55 * sy, 20 * sx, 5 * sy);
+
+      // Draw food positions (from bundle summary or default)
+      const foods = (bundle.exp1 && bundle.exp1.summary && bundle.exp1.summary.food_positions) || [[30,30],[75,25],[80,80],[20,70]];
+      foods.forEach(([fx, fy]) => {
+        ctx.fillStyle = '#10b981';
+        ctx.shadowColor = '#10b981';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(fx * sx, fy * sy, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Draw historical trail
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      const startHist = Math.max(0, currentStepIdx - 60);
+      for (let i = startHist; i <= currentStepIdx; i++) {
+        const pt = trajData[i];
+        if (i === startHist) ctx.moveTo(pt.x * sx, pt.y * sy);
+        else ctx.lineTo(pt.x * sx, pt.y * sy);
+      }
+      ctx.stroke();
+
+      // Draw Organism body
+      const ox = stepData.x * sx;
+      const oy = stepData.y * sy;
+      const ang = stepData.heading;
+
+      // Whiskers
+      const wDists = [stepData.whisker_min || 8, 12, 10];
+      const wAngles = [ang - 0.6, ang, ang + 0.6];
+      wAngles.forEach((wa, idx) => {
+        const r = (wDists[idx] || 10) * sx * 0.7;
+        ctx.strokeStyle = (wDists[idx] < 5) ? '#f43f5e' : 'rgba(0, 240, 255, 0.4)';
+        ctx.beginPath();
+        ctx.moveTo(ox, oy);
+        ctx.lineTo(ox + r * Math.cos(wa), oy + r * Math.sin(wa));
+        ctx.stroke();
+      });
+
+      // Body circle
+      ctx.fillStyle = '#00f0ff';
+      ctx.shadowColor = '#00f0ff';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(ox, oy, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Heading arrow
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(ox + 16 * Math.cos(ang), oy + 16 * Math.sin(ang));
+      ctx.stroke();
+    }
+
+    function renderExp2(exp2Data) {
+      const rlTelem = exp2Data.monolithic_rl.telemetry;
+      const bioTelem = exp2Data.bio_modular.telemetry;
+
+      const idx = currentStepIdx % Math.min(rlTelem.length, bioTelem.length);
+      const rlStep = rlTelem[idx];
+      const bioStep = bioTelem[idx];
+
+      document.getElementById('statStep').textContent = `${rlStep.step} / ${rlTelem[rlTelem.length-1].step}`;
+      document.getElementById('valRLAngle').textContent = `${rlStep.theta_deg.toFixed(1)}°`;
+      document.getElementById('valBioAngle').textContent = `${bioStep.theta_deg.toFixed(1)}°`;
+      document.getElementById('valNE').textContent = bioStep.ne_level.toFixed(2);
+      document.getElementById('barNE').style.width = `${Math.min(100, Math.round(bioStep.ne_level * 50))}%`;
+      document.getElementById('valCerCorr').textContent = `${bioStep.cerebellar_err.toFixed(2)} N`;
+
+      overlay.textContent = `Inverted Pendulum • Wind: ${bioStep.wind_force}N • Pole Mass: ${bioStep.pole_mass}kg`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Split canvas into two viewports: Left Monolithic RL, Right Bio-Modular Triad
+      const halfW = canvas.width / 2;
+
+      // Divider
+      ctx.strokeStyle = '#1f293d';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(halfW, 0);
+      ctx.lineTo(halfW, canvas.height);
+      ctx.stroke();
+
+      // Titles
+      ctx.fillStyle = '#f43f5e';
+      ctx.font = 'bold 12px monospace';
+      ctx.fillText('MONOLITHIC RL (Standard TD)', 20, 30);
+
+      ctx.fillStyle = '#00f0ff';
+      ctx.fillText("DOYA'S BIO-MODULAR TRIAD", halfW + 20, 30);
+
+      // Function to render cart-pole
+      function drawCartPole(offsetX, cartX, thetaDeg, color, isFailed) {
+        const groundY = 380;
+        const trackW = halfW - 40;
+        const screenCartX = offsetX + halfW / 2 + cartX * 35;
+
+        // Ground track
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(offsetX + 20, groundY);
+        ctx.lineTo(offsetX + halfW - 20, groundY);
+        ctx.stroke();
+
+        // Cart
+        ctx.fillStyle = isFailed ? '#f43f5e' : '#1e293b';
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.fillRect(screenCartX - 30, groundY - 20, 60, 20);
+        ctx.strokeRect(screenCartX - 30, groundY - 20, 60, 20);
+
+        // Pole
+        const poleLen = 140;
+        const rad = thetaDeg * Math.PI / 180;
+        const poleEndX = screenCartX + poleLen * Math.sin(rad);
+        const poleEndY = (groundY - 20) - poleLen * Math.cos(rad);
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(screenCartX, groundY - 20);
+        ctx.lineTo(poleEndX, poleEndY);
+        ctx.stroke();
+
+        // Pole bob
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(poleEndX, poleEndY, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      drawCartPole(0, rlStep.x, rlStep.theta_deg, '#f43f5e', rlStep.failed);
+      drawCartPole(halfW, bioStep.x, bioStep.theta_deg, '#00f0ff', bioStep.failed);
+    }
+
+    function renderExp3(exp3Data) {
+      const telem = exp3Data.telemetry;
+      const stepData = telem[currentStepIdx % telem.length];
+
+      document.getElementById('statStep').textContent = `${stepData.step} / ${telem[telem.length-1].step}`;
+      const wormStateEl = document.getElementById('valWormState');
+      if (stepData.is_reversing) {
+        wormStateEl.textContent = 'REVERSAL ESCAPE REFLEX';
+        wormStateEl.style.color = 'var(--accent-rose)';
+      } else {
+        wormStateEl.textContent = 'FORWARD UNDULATION';
+        wormStateEl.style.color = 'var(--accent-green)';
+      }
+
+      // Update neurons
+      function setMeter(idBar, idVal, v) {
+        const normalized = Math.max(0, Math.min(100, (v + 70) * (100 / 90)));
+        document.getElementById(idBar).style.width = `${normalized}%`;
+        document.getElementById(idVal).textContent = `${Math.round(v)}`;
+      }
+      setMeter('barALM', 'vALM', stepData.v_ALM);
+      setMeter('barAVA', 'vAVA', stepData.v_AVA);
+      setMeter('barAVB', 'vAVB', stepData.v_AVB);
+      setMeter('barPVC', 'vPVC', stepData.v_PVC);
+
+      overlay.textContent = `C. elegans Connectome • Reversing: ${stepData.is_reversing} • Touch: ${stepData.touch_stimulus > 0 ? 'ACTIVE' : 'NONE'}`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Center worm on canvas
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      // Shift body coordinates so head is centered
+      const hx = stepData.body_x[0];
+      const hy = stepData.body_y[0];
+
+      // Draw 12 body segments
+      ctx.lineWidth = 14;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 0; i < stepData.body_x.length - 1; i++) {
+        const segX1 = cx + (stepData.body_x[i] - hx) * 12;
+        const segY1 = cy + (stepData.body_y[i] - hy) * 12;
+        const segX2 = cx + (stepData.body_x[i+1] - hx) * 12;
+        const segY2 = cy + (stepData.body_y[i+1] - hy) * 12;
+
+        const torque = (stepData.muscle_torques && stepData.muscle_torques[i]) || 0;
+        // Dorsal (positive torque) red/pink, Ventral (negative torque) blue/cyan
+        const segColor = torque > 0 ? `rgba(244, 63, 94, ${0.4 + Math.abs(torque)*0.6})` : `rgba(0, 240, 255, ${0.4 + Math.abs(torque)*0.6})`;
+
+        ctx.strokeStyle = segColor;
+        ctx.beginPath();
+        ctx.moveTo(segX1, segY1);
+        ctx.lineTo(segX2, segY2);
+        ctx.stroke();
+
+        // Node joint
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(segX1, segY1, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Head
+      ctx.fillStyle = stepData.is_reversing ? '#f43f5e' : '#10b981';
+      ctx.shadowColor = ctx.fillStyle;
+      ctx.shadowBlur = 15;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Touch stimulus indicator
+      if (stepData.touch_stimulus > 0) {
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    function renderSynthesis(synthData) {
+      const traj = synthData.trajectory;
+      const stepData = traj[currentStepIdx % traj.length];
+
+      document.getElementById('statStep').textContent = `${stepData.step} / ${traj[traj.length-1].step}`;
+      document.getElementById('valSynthPos').textContent = `(${stepData.head_x}, ${stepData.head_y})`;
+      document.getElementById('valSynthFood').textContent = stepData.food_count;
+      document.getElementById('valSynthMod').textContent = `${stepData.dopamine.toFixed(2)} / ${stepData.norepinephrine.toFixed(2)}`;
+
+      overlay.textContent = `Synthesis Organism • Reversing: ${stepData.is_reversing} • Pellets: ${stepData.food_count}`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const sx = canvas.width / 120;
+      const sy = canvas.height / 120;
+
+      // Draw Food Pellets
+      const foods = (synthData.summary && synthData.summary.food_positions) || [[40,40],[80,30],[30,90],[90,90]];
+      foods.forEach(([fx, fy]) => {
+        ctx.fillStyle = '#10b981';
+        ctx.shadowColor = '#10b981';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(fx * sx, fy * sy, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Draw Worm Body segments
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      for (let i = 0; i < stepData.body_x.length - 1; i++) {
+        const x1 = stepData.body_x[i] * sx;
+        const y1 = stepData.body_y[i] * sy;
+        const x2 = stepData.body_x[i+1] * sx;
+        const y2 = stepData.body_y[i+1] * sy;
+
+        ctx.strokeStyle = stepData.is_reversing ? 'rgba(244, 63, 94, 0.8)' : 'rgba(0, 240, 255, 0.8)';
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+
+      // Head
+      const hx = stepData.body_x[0] * sx;
+      const hy = stepData.body_y[0] * sy;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(hx, hy, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Main Animation Loop
+    function loop() {
+      if (isPlaying) {
+        currentStepIdx += playbackSpeed;
+      }
+
+      if (activeTab === 'exp1' && bundle.exp1) {
+        renderExp1(bundle.exp1.trajectory);
+      } else if (activeTab === 'exp2' && bundle.exp2) {
+        renderExp2(bundle.exp2);
+      } else if (activeTab === 'exp3' && bundle.exp3) {
+        renderExp3(bundle.exp3);
+      } else if (activeTab === 'synthesis' && bundle.synthesis) {
+        renderSynthesis(bundle.synthesis);
+      }
+
+      animFrameId = requestAnimationFrame(loop);
+    }
+
+    // Initialize
+    updateControlsAndStats();
+    loop();
+  </script>
+</body>
+</html>
