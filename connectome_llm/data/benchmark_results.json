@@ -1,0 +1,29 @@
+{
+  "blind_random": {
+    "mode": "blind_random",
+    "food_eaten": 0,
+    "total_distance": 98.98,
+    "collisions": 1,
+    "arena_coverage_pct": 7.0,
+    "foraging_efficiency": 0.0,
+    "final_glucose": 0.2
+  },
+  "pure_chemotaxis": {
+    "mode": "pure_chemotaxis",
+    "food_eaten": 0,
+    "total_distance": 99.73,
+    "collisions": 9,
+    "arena_coverage_pct": 4.0,
+    "foraging_efficiency": 0.0,
+    "final_glucose": 0.2
+  },
+  "language_guided": {
+    "mode": "language_guided",
+    "food_eaten": 1,
+    "total_distance": 85.91,
+    "collisions": 1,
+    "arena_coverage_pct": 8.0,
+    "foraging_efficiency": 1.16,
+    "final_glucose": 0.5
+  }
+}

@@ -14,6 +14,9 @@ exp1_file = data_dir / "exp1_trajectory.json"
 exp2_file = data_dir / "exp2_results.json"
 exp3_file = data_dir / "exp3_connectome.json"
 synth_file = data_dir / "synthesis_results.json"
+llm_file = Path(__file__).resolve().parent.parent / "connectome_llm" / "data" / "benchmark_results.json"
+evo_file = Path(__file__).resolve().parent.parent / "neuroevolution" / "data" / "evolution_results.json"
+swarm_file = Path(__file__).resolve().parent.parent / "swarm" / "data" / "swarm_results.json"
 
 bundle = {}
 
@@ -29,6 +32,15 @@ if exp3_file.exists():
 if synth_file.exists():
     with open(synth_file, "r") as f:
         bundle["synthesis"] = json.load(f)
+if llm_file.exists():
+    with open(llm_file, "r") as f:
+        bundle["connectome_llm"] = json.load(f)
+if evo_file.exists():
+    with open(evo_file, "r") as f:
+        bundle["neuroevolution"] = json.load(f)
+if swarm_file.exists():
+    with open(swarm_file, "r") as f:
+        bundle["swarm"] = json.load(f)
 
 js_content = f"// Auto-generated telemetry data bundle\nwindow.TELEMETRY_BUNDLE = {json.dumps(bundle)};\n"
 

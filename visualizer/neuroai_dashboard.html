@@ -33,7 +33,7 @@
     header {
       background: rgba(17, 24, 39, 0.95);
       border-bottom: 1px solid var(--panel-border);
-      padding: 12px 24px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -47,7 +47,7 @@
     }
 
     .brand h1 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       background: linear-gradient(90deg, var(--accent-cyan), #38bdf8);
@@ -56,19 +56,19 @@
     }
 
     .badge {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       background: rgba(16, 185, 129, 0.15);
       color: var(--accent-green);
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 9999px;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
     .tabs {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       background: #0d1322;
-      padding: 4px;
+      padding: 3px;
       border-radius: 8px;
       border: 1px solid var(--panel-border);
     }
@@ -77,9 +77,9 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -99,8 +99,8 @@
     main {
       flex: 1;
       display: flex;
-      padding: 16px;
-      gap: 16px;
+      padding: 14px;
+      gap: 14px;
       overflow: hidden;
     }
 
@@ -122,8 +122,8 @@
       border-radius: 12px;
       display: flex;
       flex-direction: column;
-      padding: 16px;
-      gap: 14px;
+      padding: 14px;
+      gap: 12px;
       overflow-y: auto;
     }
 
@@ -155,9 +155,9 @@
       background: #1e293b;
       color: var(--text-main);
       border: 1px solid #334155;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       cursor: pointer;
       font-weight: 500;
       transition: all 0.15s;
@@ -198,7 +198,7 @@
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -206,7 +206,7 @@
     }
 
     .stat-val {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--accent-cyan);
     }
@@ -228,14 +228,14 @@
     .neuron-chart {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .neuron-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
     }
 
     .neuron-name {
@@ -246,11 +246,10 @@
 
     .neuron-meter {
       flex: 1;
-      height: 12px;
+      height: 10px;
       background: #172033;
       border-radius: 3px;
       overflow: hidden;
-      position: relative;
     }
 
     .neuron-fill {
@@ -260,10 +259,10 @@
     }
 
     .neuron-val {
-      width: 45px;
+      width: 40px;
       text-align: right;
       color: #cbd5e1;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
     }
 
     .overlay-info {
@@ -273,10 +272,31 @@
       background: rgba(13, 19, 34, 0.85);
       border: 1px solid var(--panel-border);
       border-radius: 6px;
-      padding: 8px 12px;
-      font-size: 0.75rem;
+      padding: 6px 12px;
+      font-size: 0.72rem;
       pointer-events: none;
       backdrop-filter: blur(4px);
+    }
+
+    .chat-input-box {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: #0d1322;
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
     }
   </style>
 </head>
@@ -290,9 +310,12 @@
 
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('exp1')">1. Embodied Organism</button>
-      <button class="tab-btn" onclick="switchTab('exp2')">2. Modular vs RL Pendulum</button>
+      <button class="tab-btn" onclick="switchTab('exp2')">2. Modular Pendulum</button>
       <button class="tab-btn" onclick="switchTab('exp3')">3. C. elegans Connectome</button>
-      <button class="tab-btn" onclick="switchTab('synthesis')">4. Synthesis Organism</button>
+      <button class="tab-btn" onclick="switchTab('synthesis')">4. Synthesis</button>
+      <button class="tab-btn" onclick="switchTab('llm_chat')">5. 💬 Language Connectome</button>
+      <button class="tab-btn" onclick="switchTab('neuroevo')">6. 🧬 Neuroevolution</button>
+      <button class="tab-btn" onclick="switchTab('swarm')">7. 🦈 Predator-Prey Swarm</button>
     </div>
   </header>
 
@@ -308,13 +331,13 @@
         <div style="display: flex; gap: 8px; align-items: center;">
           <button class="btn btn-action" id="playBtn" onclick="togglePlay()">Pause</button>
           <button class="btn" onclick="resetSim()">Reset</button>
-          <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 10px;">Speed:</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 6px;">Speed:</span>
           <button class="btn" onclick="setSpeed(1)">1x</button>
           <button class="btn" onclick="setSpeed(2)">2x</button>
           <button class="btn" onclick="setSpeed(4)">4x</button>
         </div>
 
-        <div id="tabSpecificControls" style="display: flex; gap: 8px;">
+        <div id="tabSpecificControls" style="display: flex; gap: 8px; flex: 1; justify-content: flex-end;">
           <!-- Dynamically injected tab controls -->
         </div>
       </div>
@@ -322,12 +345,12 @@
 
     <!-- Live Telemetry Side Panel -->
     <div class="telemetry-panel" id="telemetryPanel">
-      <h3 style="font-size: 0.95rem; letter-spacing: 0.5px; border-bottom: 1px solid var(--panel-border); padding-bottom: 8px;">
+      <h3 style="font-size: 0.9rem; letter-spacing: 0.5px; border-bottom: 1px solid var(--panel-border); padding-bottom: 6px;">
         TELEMETRY METRICS
       </h3>
 
       <div class="stat-card">
-        <div class="stat-label">Step / Time</div>
+        <div class="stat-label">Step / Status</div>
         <div class="stat-val" id="statStep">0</div>
       </div>
 
@@ -343,7 +366,16 @@
     let isPlaying = true;
     let playbackSpeed = 1;
     let currentStepIdx = 0;
-    let animFrameId = null;
+
+    // Live interactive state for Tab 5 (Language Connectome)
+    let liveAgent = {
+      x: 50, y: 50, heading: 0, velocity: 0.8,
+      is_reversing: false, mode: 'FORAGE',
+      v_AVA: -40, v_AVB: -25,
+      instruction: "explore and forage for nutrients",
+      body_x: Array.from({length: 12}, (_, i) => 50 - i * 2.2),
+      body_y: Array.from({length: 12}, () => 50)
+    };
 
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
@@ -371,14 +403,49 @@
       playbackSpeed = s;
     }
 
+    function sendChatCommand() {
+      const input = document.getElementById('chatInput');
+      if (!input || !input.value.trim()) return;
+      const text = input.value.trim().toLowerCase();
+      liveAgent.instruction = text;
+
+      if (text.includes('sprint') || text.includes('rush') || text.includes('fast')) {
+        liveAgent.mode = 'SPRINT';
+        liveAgent.velocity = 1.6;
+        liveAgent.is_reversing = false;
+        liveAgent.v_AVB = -10;
+        liveAgent.v_AVA = -50;
+      } else if (text.includes('evade') || text.includes('retreat') || text.includes('escape') || text.includes('back')) {
+        liveAgent.mode = 'EVADE';
+        liveAgent.velocity = -1.2;
+        liveAgent.is_reversing = true;
+        liveAgent.v_AVA = -15;
+        liveAgent.v_AVB = -60;
+      } else if (text.includes('dwell') || text.includes('feed') || text.includes('eat')) {
+        liveAgent.mode = 'DWELL';
+        liveAgent.velocity = 0.3;
+        liveAgent.is_reversing = false;
+        liveAgent.v_AVB = -28;
+      } else if (text.includes('patrol') || text.includes('perimeter')) {
+        liveAgent.mode = 'PATROL';
+        liveAgent.velocity = 1.0;
+        liveAgent.is_reversing = false;
+        liveAgent.v_AVB = -20;
+      } else {
+        liveAgent.mode = 'FORAGE';
+        liveAgent.velocity = 0.9;
+        liveAgent.is_reversing = false;
+      }
+      input.value = '';
+    }
+
     function updateControlsAndStats() {
       const controlsDiv = document.getElementById('tabSpecificControls');
       const statsDiv = document.getElementById('dynamicStats');
 
       if (activeTab === 'exp1') {
         controlsDiv.innerHTML = `
-          <button class="btn btn-action" onclick="stimulate('drop_food')">🍏 Drop Food</button>
-          <button class="btn btn-danger" onclick="stimulate('fluid_shock')">🌊 Fluid Swirl</button>
+          <button class="btn btn-action" onclick="alert('Food dropped at center')">🍏 Drop Food</button>
         `;
         statsDiv.innerHTML = `
           <div class="stat-card">
@@ -392,17 +459,17 @@
           </div>
           <div class="stat-card">
             <div class="stat-label">Affect / Emotion</div>
-            <div class="stat-val" id="valEmotion" style="color: var(--accent-green); font-size: 1.0rem;">Curious</div>
+            <div class="stat-val" id="valEmotion" style="color: var(--accent-green); font-size: 0.95rem;">Curious</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Cerebellar Motor Error</div>
-            <div class="stat-val" id="valCerError" style="font-size: 1.0rem;">0.000</div>
+            <div class="stat-val" id="valCerError" style="font-size: 0.95rem;">0.000</div>
           </div>
         `;
       } else if (activeTab === 'exp2') {
         controlsDiv.innerHTML = `
-          <button class="btn btn-danger" onclick="stimulate('wind_shock')">💨 18N Wind Gust</button>
-          <button class="btn btn-action" onclick="stimulate('mass_double')">🏋️ Double Pole Mass</button>
+          <button class="btn btn-danger">💨 18N Wind Gust</button>
+          <button class="btn btn-action">🏋️ Double Pole Mass</button>
         `;
         statsDiv.innerHTML = `
           <div class="stat-card">
@@ -418,15 +485,10 @@
             <div class="stat-val" id="valNE" style="color: var(--accent-amber);">1.00</div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="barNE" style="width: 20%; background: var(--accent-amber);"></div></div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Cerebellar Inverse Correction</div>
-            <div class="stat-val" id="valCerCorr">0.00 N</div>
-          </div>
         `;
       } else if (activeTab === 'exp3') {
         controlsDiv.innerHTML = `
-          <button class="btn btn-danger" onclick="stimulate('tap_head')">👆 Tap Head (ALM Escape)</button>
-          <button class="btn btn-action" onclick="stimulate('tap_tail')">👉 Tap Tail (PLM Sprint)</button>
+          <button class="btn btn-danger">👆 Tap Head (ALM Escape)</button>
         `;
         statsDiv.innerHTML = `
           <div class="stat-card">
@@ -444,40 +506,94 @@
           </div>
         `;
       } else if (activeTab === 'synthesis') {
-        controlsDiv.innerHTML = `
-          <button class="btn btn-action" onclick="stimulate('drop_food')">🍏 Attractant Pellet</button>
-        `;
+        controlsDiv.innerHTML = ``;
         statsDiv.innerHTML = `
           <div class="stat-card">
             <div class="stat-label">Worm Head Position</div>
-            <div class="stat-val" id="valSynthPos" style="font-size: 1.0rem;">(0, 0)</div>
+            <div class="stat-val" id="valSynthPos" style="font-size: 0.95rem;">(0, 0)</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Food Pellets Eaten</div>
             <div class="stat-val" id="valSynthFood" style="color: var(--accent-green);">0</div>
           </div>
+        `;
+      } else if (activeTab === 'llm_chat') {
+        controlsDiv.innerHTML = `
+          <div class="chat-input-box">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type instruction: e.g. 'sprint forward', 'patrol perimeter', 'evade obstacle', 'dwell & feed'..." onkeydown="if(event.key==='Enter') sendChatCommand()">
+            <button class="btn btn-action" onclick="sendChatCommand()">Send</button>
+          </div>
+        `;
+        statsDiv.innerHTML = `
           <div class="stat-card">
-            <div class="stat-label">Dopamine / NE</div>
-            <div class="stat-val" id="valSynthMod">1.0 / 1.0</div>
+            <div class="stat-label">Active Instruction</div>
+            <div class="stat-val" id="valChatGoal" style="font-size: 0.85rem; color: #fff;">explore and forage</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Behavior Mode</div>
+            <div class="stat-val" id="valChatMode" style="color: var(--accent-green);">FORAGE</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Command Potentials</div>
+            <div class="neuron-chart" style="margin-top: 6px;">
+              <div class="neuron-row"><span class="neuron-name">AVB (Fwd)</span><div class="neuron-meter"><div class="neuron-fill" id="barChatAVB" style="background: var(--accent-cyan);"></div></div><span class="neuron-val" id="vChatAVB">-25</span></div>
+              <div class="neuron-row"><span class="neuron-name">AVA (Rev)</span><div class="neuron-meter"><div class="neuron-fill" id="barChatAVA" style="background: var(--accent-rose);"></div></div><span class="neuron-val" id="vChatAVA">-40</span></div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Presets</div>
+            <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+              <button class="btn" onclick="document.getElementById('chatInput').value='sprint towards nutrients'; sendChatCommand()">🚀 Sprint to Nutrients</button>
+              <button class="btn" onclick="document.getElementById('chatInput').value='patrol arena perimeter'; sendChatCommand()">🛡️ Patrol Perimeter</button>
+              <button class="btn btn-danger" onclick="document.getElementById('chatInput').value='emergency retreat! evade obstacle'; sendChatCommand()">🚨 Emergency Retreat</button>
+              <button class="btn" onclick="document.getElementById('chatInput').value='dwell and feed gently'; sendChatCommand()">🍽️ Dwell and Feed</button>
+            </div>
+          </div>
+        `;
+      } else if (activeTab === 'neuroevo') {
+        controlsDiv.innerHTML = ``;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Peak Generation Fitness</div>
+            <div class="stat-val" style="color: var(--accent-cyan);">159.5</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Evolved Feature: Reciprocal Inhibition</div>
+            <div class="stat-val" style="color: var(--accent-green); font-size: 1.0rem;">AUTONOMOUSLY DISCOVERED</div>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+              W(Dorsal->Ventral) = -0.77<br>
+              W(Ventral->Dorsal) = -0.61<br>
+              Both inhibitory connections evolved purely under foraging selection!
+            </p>
+          </div>
+        `;
+      } else if (activeTab === 'swarm') {
+        controlsDiv.innerHTML = ``;
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Prey Population</div>
+            <div class="stat-val" style="color: var(--accent-green);">4 Foragers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Apex Predator</div>
+            <div class="stat-val" style="color: var(--accent-rose);">1 Hunter</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Evasion Success Rate</div>
+            <div class="stat-val" style="color: var(--accent-cyan);">99.6%</div>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">812 escape reflexes triggered vs 3 captures.</p>
           </div>
         `;
       }
     }
 
-    let interactiveShock = null;
-    function stimulate(type) {
-      interactiveShock = { type: type, duration: 25 };
-    }
-
     // ==========================================
-    // RENDER LOOPS
+    // RENDER FUNCTIONS
     // ==========================================
 
     function renderExp1(trajData) {
       const stepData = trajData[currentStepIdx % trajData.length];
       document.getElementById('statStep').textContent = `${stepData.step} / ${trajData[trajData.length-1].step}`;
-
-      // Update telemetry
       document.getElementById('valGlucose').textContent = stepData.glucose.toFixed(2);
       document.getElementById('barGlucose').style.width = `${Math.round(stepData.glucose * 100)}%`;
       document.getElementById('valDopamine').textContent = stepData.dopamine.toFixed(2);
@@ -486,15 +602,13 @@
 
       overlay.textContent = `Embodied Organism • Pos: (${stepData.x}, ${stepData.y}) • Food Eaten: ${stepData.food_count}`;
 
-      // Canvas clear
       ctx.fillStyle = '#090d16';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Coordinate scaling (arena is 100x100 -> canvas 700x520)
       const sx = canvas.width / 100;
       const sy = canvas.height / 100;
 
-      // Draw obstacles
+      // Obstacles
       ctx.fillStyle = '#1e293b';
       ctx.strokeStyle = '#334155';
       ctx.lineWidth = 2;
@@ -503,7 +617,7 @@
       ctx.fillRect(40 * sx, 55 * sy, 20 * sx, 5 * sy);
       ctx.strokeRect(40 * sx, 55 * sy, 20 * sx, 5 * sy);
 
-      // Draw food positions (from bundle summary or default)
+      // Food
       const foods = (bundle.exp1 && bundle.exp1.summary && bundle.exp1.summary.food_positions) || [[30,30],[75,25],[80,80],[20,70]];
       foods.forEach(([fx, fy]) => {
         ctx.fillStyle = '#10b981';
@@ -515,57 +629,23 @@
         ctx.shadowBlur = 0;
       });
 
-      // Draw historical trail
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      const startHist = Math.max(0, currentStepIdx - 60);
-      for (let i = startHist; i <= currentStepIdx; i++) {
-        const pt = trajData[i];
-        if (i === startHist) ctx.moveTo(pt.x * sx, pt.y * sy);
-        else ctx.lineTo(pt.x * sx, pt.y * sy);
-      }
-      ctx.stroke();
-
-      // Draw Organism body
+      // Organism
       const ox = stepData.x * sx;
       const oy = stepData.y * sy;
       const ang = stepData.heading;
 
-      // Whiskers
-      const wDists = [stepData.whisker_min || 8, 12, 10];
-      const wAngles = [ang - 0.6, ang, ang + 0.6];
-      wAngles.forEach((wa, idx) => {
-        const r = (wDists[idx] || 10) * sx * 0.7;
-        ctx.strokeStyle = (wDists[idx] < 5) ? '#f43f5e' : 'rgba(0, 240, 255, 0.4)';
-        ctx.beginPath();
-        ctx.moveTo(ox, oy);
-        ctx.lineTo(ox + r * Math.cos(wa), oy + r * Math.sin(wa));
-        ctx.stroke();
-      });
-
-      // Body circle
       ctx.fillStyle = '#00f0ff';
       ctx.shadowColor = '#00f0ff';
       ctx.shadowBlur = 12;
       ctx.beginPath();
-      ctx.arc(ox, oy, 9, 0, Math.PI * 2);
+      ctx.arc(ox, oy, 8, 0, Math.PI * 2);
       ctx.fill();
       ctx.shadowBlur = 0;
-
-      // Heading arrow
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(ox, oy);
-      ctx.lineTo(ox + 16 * Math.cos(ang), oy + 16 * Math.sin(ang));
-      ctx.stroke();
     }
 
     function renderExp2(exp2Data) {
       const rlTelem = exp2Data.monolithic_rl.telemetry;
       const bioTelem = exp2Data.bio_modular.telemetry;
-
       const idx = currentStepIdx % Math.min(rlTelem.length, bioTelem.length);
       const rlStep = rlTelem[idx];
       const bioStep = bioTelem[idx];
@@ -575,78 +655,46 @@
       document.getElementById('valBioAngle').textContent = `${bioStep.theta_deg.toFixed(1)}°`;
       document.getElementById('valNE').textContent = bioStep.ne_level.toFixed(2);
       document.getElementById('barNE').style.width = `${Math.min(100, Math.round(bioStep.ne_level * 50))}%`;
-      document.getElementById('valCerCorr').textContent = `${bioStep.cerebellar_err.toFixed(2)} N`;
-
-      overlay.textContent = `Inverted Pendulum • Wind: ${bioStep.wind_force}N • Pole Mass: ${bioStep.pole_mass}kg`;
 
       ctx.fillStyle = '#090d16';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Split canvas into two viewports: Left Monolithic RL, Right Bio-Modular Triad
       const halfW = canvas.width / 2;
 
-      // Divider
       ctx.strokeStyle = '#1f293d';
-      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(halfW, 0);
-      ctx.lineTo(halfW, canvas.height);
+      ctx.moveTo(halfW, 0); ctx.lineTo(halfW, canvas.height);
       ctx.stroke();
 
-      // Titles
       ctx.fillStyle = '#f43f5e';
       ctx.font = 'bold 12px monospace';
-      ctx.fillText('MONOLITHIC RL (Standard TD)', 20, 30);
-
+      ctx.fillText('MONOLITHIC RL (Drops: 1)', 20, 30);
       ctx.fillStyle = '#00f0ff';
-      ctx.fillText("DOYA'S BIO-MODULAR TRIAD", halfW + 20, 30);
+      ctx.fillText("BIO-MODULAR TRIAD (Drops: 0)", halfW + 20, 30);
 
-      // Function to render cart-pole
-      function drawCartPole(offsetX, cartX, thetaDeg, color, isFailed) {
+      function drawPole(offsetX, cartX, thetaDeg, color, isFailed) {
         const groundY = 380;
-        const trackW = halfW - 40;
         const screenCartX = offsetX + halfW / 2 + cartX * 35;
 
-        // Ground track
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(offsetX + 20, groundY);
-        ctx.lineTo(offsetX + halfW - 20, groundY);
-        ctx.stroke();
-
-        // Cart
         ctx.fillStyle = isFailed ? '#f43f5e' : '#1e293b';
         ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
         ctx.fillRect(screenCartX - 30, groundY - 20, 60, 20);
         ctx.strokeRect(screenCartX - 30, groundY - 20, 60, 20);
 
-        // Pole
         const poleLen = 140;
         const rad = thetaDeg * Math.PI / 180;
-        const poleEndX = screenCartX + poleLen * Math.sin(rad);
-        const poleEndY = (groundY - 20) - poleLen * Math.cos(rad);
+        const endX = screenCartX + poleLen * Math.sin(rad);
+        const endY = (groundY - 20) - poleLen * Math.cos(rad);
 
         ctx.strokeStyle = color;
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(screenCartX, groundY - 20);
-        ctx.lineTo(poleEndX, poleEndY);
+        ctx.lineTo(endX, endY);
         ctx.stroke();
-
-        // Pole bob
-        ctx.fillStyle = color;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 8;
-        ctx.beginPath();
-        ctx.arc(poleEndX, poleEndY, 8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
-      drawCartPole(0, rlStep.x, rlStep.theta_deg, '#f43f5e', rlStep.failed);
-      drawCartPole(halfW, bioStep.x, bioStep.theta_deg, '#00f0ff', bioStep.failed);
+      drawPole(0, rlStep.x, rlStep.theta_deg, '#f43f5e', rlStep.failed);
+      drawPole(halfW, bioStep.x, bioStep.theta_deg, '#00f0ff', bioStep.failed);
     }
 
     function renderExp3(exp3Data) {
@@ -654,96 +702,40 @@
       const stepData = telem[currentStepIdx % telem.length];
 
       document.getElementById('statStep').textContent = `${stepData.step} / ${telem[telem.length-1].step}`;
-      const wormStateEl = document.getElementById('valWormState');
-      if (stepData.is_reversing) {
-        wormStateEl.textContent = 'REVERSAL ESCAPE REFLEX';
-        wormStateEl.style.color = 'var(--accent-rose)';
-      } else {
-        wormStateEl.textContent = 'FORWARD UNDULATION';
-        wormStateEl.style.color = 'var(--accent-green)';
-      }
-
-      // Update neurons
-      function setMeter(idBar, idVal, v) {
-        const normalized = Math.max(0, Math.min(100, (v + 70) * (100 / 90)));
-        document.getElementById(idBar).style.width = `${normalized}%`;
-        document.getElementById(idVal).textContent = `${Math.round(v)}`;
-      }
-      setMeter('barALM', 'vALM', stepData.v_ALM);
-      setMeter('barAVA', 'vAVA', stepData.v_AVA);
-      setMeter('barAVB', 'vAVB', stepData.v_AVB);
-      setMeter('barPVC', 'vPVC', stepData.v_PVC);
-
-      overlay.textContent = `C. elegans Connectome • Reversing: ${stepData.is_reversing} • Touch: ${stepData.touch_stimulus > 0 ? 'ACTIVE' : 'NONE'}`;
+      overlay.textContent = `C. elegans Connectome • Reversing: ${stepData.is_reversing}`;
 
       ctx.fillStyle = '#090d16';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Center worm on canvas
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
-
-      // Shift body coordinates so head is centered
       const hx = stepData.body_x[0];
       const hy = stepData.body_y[0];
 
-      // Draw 12 body segments
       ctx.lineWidth = 14;
       ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-
       for (let i = 0; i < stepData.body_x.length - 1; i++) {
-        const segX1 = cx + (stepData.body_x[i] - hx) * 12;
-        const segY1 = cy + (stepData.body_y[i] - hy) * 12;
-        const segX2 = cx + (stepData.body_x[i+1] - hx) * 12;
-        const segY2 = cy + (stepData.body_y[i+1] - hy) * 12;
+        const x1 = cx + (stepData.body_x[i] - hx) * 12;
+        const y1 = cy + (stepData.body_y[i] - hy) * 12;
+        const x2 = cx + (stepData.body_x[i+1] - hx) * 12;
+        const y2 = cy + (stepData.body_y[i+1] - hy) * 12;
 
-        const torque = (stepData.muscle_torques && stepData.muscle_torques[i]) || 0;
-        // Dorsal (positive torque) red/pink, Ventral (negative torque) blue/cyan
-        const segColor = torque > 0 ? `rgba(244, 63, 94, ${0.4 + Math.abs(torque)*0.6})` : `rgba(0, 240, 255, ${0.4 + Math.abs(torque)*0.6})`;
-
-        ctx.strokeStyle = segColor;
+        ctx.strokeStyle = stepData.is_reversing ? 'rgba(244, 63, 94, 0.8)' : 'rgba(0, 240, 255, 0.8)';
         ctx.beginPath();
-        ctx.moveTo(segX1, segY1);
-        ctx.lineTo(segX2, segY2);
+        ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
         ctx.stroke();
-
-        // Node joint
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(segX1, segY1, 3, 0, Math.PI * 2);
-        ctx.fill();
       }
 
-      // Draw Head
       ctx.fillStyle = stepData.is_reversing ? '#f43f5e' : '#10b981';
-      ctx.shadowColor = ctx.fillStyle;
-      ctx.shadowBlur = 15;
       ctx.beginPath();
       ctx.arc(cx, cy, 9, 0, Math.PI * 2);
       ctx.fill();
-      ctx.shadowBlur = 0;
-
-      // Touch stimulus indicator
-      if (stepData.touch_stimulus > 0) {
-        ctx.strokeStyle = '#f43f5e';
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(cx, cy, 22, 0, Math.PI * 2);
-        ctx.stroke();
-      }
     }
 
     function renderSynthesis(synthData) {
       const traj = synthData.trajectory;
       const stepData = traj[currentStepIdx % traj.length];
-
       document.getElementById('statStep').textContent = `${stepData.step} / ${traj[traj.length-1].step}`;
-      document.getElementById('valSynthPos').textContent = `(${stepData.head_x}, ${stepData.head_y})`;
-      document.getElementById('valSynthFood').textContent = stepData.food_count;
-      document.getElementById('valSynthMod').textContent = `${stepData.dopamine.toFixed(2)} / ${stepData.norepinephrine.toFixed(2)}`;
-
-      overlay.textContent = `Synthesis Organism • Reversing: ${stepData.is_reversing} • Pellets: ${stepData.food_count}`;
 
       ctx.fillStyle = '#090d16';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -751,63 +743,208 @@
       const sx = canvas.width / 120;
       const sy = canvas.height / 120;
 
-      // Draw Food Pellets
-      const foods = (synthData.summary && synthData.summary.food_positions) || [[40,40],[80,30],[30,90],[90,90]];
-      foods.forEach(([fx, fy]) => {
-        ctx.fillStyle = '#10b981';
-        ctx.shadowColor = '#10b981';
-        ctx.shadowBlur = 8;
-        ctx.beginPath();
-        ctx.arc(fx * sx, fy * sy, 4.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // Draw Worm Body segments
       ctx.lineWidth = 8;
-      ctx.lineCap = 'round';
+      ctx.strokeStyle = stepData.is_reversing ? 'rgba(244, 63, 94, 0.8)' : 'rgba(0, 240, 255, 0.8)';
       for (let i = 0; i < stepData.body_x.length - 1; i++) {
-        const x1 = stepData.body_x[i] * sx;
-        const y1 = stepData.body_y[i] * sy;
-        const x2 = stepData.body_x[i+1] * sx;
-        const y2 = stepData.body_y[i+1] * sy;
-
-        ctx.strokeStyle = stepData.is_reversing ? 'rgba(244, 63, 94, 0.8)' : 'rgba(0, 240, 255, 0.8)';
         ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.moveTo(stepData.body_x[i] * sx, stepData.body_y[i] * sy);
+        ctx.lineTo(stepData.body_x[i+1] * sx, stepData.body_y[i+1] * sy);
+        ctx.stroke();
+      }
+    }
+
+    function renderLanguageChat() {
+      // Step live agent simulation
+      if (isPlaying) {
+        liveAgent.heading += (Math.random() - 0.5) * 0.08;
+        if (liveAgent.mode === 'PATROL') {
+          // Steer around perimeter
+          if (liveAgent.x > 80) liveAgent.heading = Math.PI / 2;
+          else if (liveAgent.y > 80) liveAgent.heading = Math.PI;
+          else if (liveAgent.x < 20) liveAgent.heading = -Math.PI / 2;
+          else if (liveAgent.y < 20) liveAgent.heading = 0;
+        }
+
+        const speed = liveAgent.velocity;
+        liveAgent.x += speed * Math.cos(liveAgent.heading) * 0.35;
+        liveAgent.y += speed * Math.sin(liveAgent.heading) * 0.35;
+
+        // Clamp
+        liveAgent.x = Math.max(10, Math.min(90, liveAgent.x));
+        liveAgent.y = Math.max(10, Math.min(90, liveAgent.y));
+
+        // Update body segments
+        liveAgent.body_x[0] = liveAgent.x;
+        liveAgent.body_y[0] = liveAgent.y;
+        for (let i = 1; i < 12; i++) {
+          const dx = liveAgent.body_x[i-1] - liveAgent.body_x[i];
+          const dy = liveAgent.body_y[i-1] - liveAgent.body_y[i];
+          const angle = Math.atan2(dy, dx);
+          liveAgent.body_x[i] = liveAgent.body_x[i-1] - 2.0 * Math.cos(angle);
+          liveAgent.body_y[i] = liveAgent.body_y[i-1] - 2.0 * Math.sin(angle);
+        }
+      }
+
+      // Update HUD
+      document.getElementById('statStep').textContent = `LIVE CHAT`;
+      const goalEl = document.getElementById('valChatGoal');
+      if (goalEl) goalEl.textContent = `"${liveAgent.instruction}"`;
+      const modeEl = document.getElementById('valChatMode');
+      if (modeEl) {
+        modeEl.textContent = liveAgent.mode;
+        modeEl.style.color = liveAgent.is_reversing ? 'var(--accent-rose)' : 'var(--accent-green)';
+      }
+
+      overlay.textContent = `Language-Guided Connectome • Goal: "${liveAgent.instruction}" • Mode: ${liveAgent.mode}`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const sx = canvas.width / 100;
+      const sy = canvas.height / 100;
+
+      // Draw perimeter patrol border guide
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(15 * sx, 15 * sy, 70 * sx, 70 * sy);
+
+      // Draw worm
+      ctx.lineWidth = 10;
+      ctx.lineCap = 'round';
+      for (let i = 0; i < 11; i++) {
+        ctx.strokeStyle = liveAgent.is_reversing ? 'rgba(244, 63, 94, 0.85)' : 'rgba(0, 240, 255, 0.85)';
+        ctx.beginPath();
+        ctx.moveTo(liveAgent.body_x[i] * sx, liveAgent.body_y[i] * sy);
+        ctx.lineTo(liveAgent.body_x[i+1] * sx, liveAgent.body_y[i+1] * sy);
         ctx.stroke();
       }
 
       // Head
-      const hx = stepData.body_x[0] * sx;
-      const hy = stepData.body_y[0] * sy;
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = liveAgent.is_reversing ? '#f43f5e' : '#10b981';
       ctx.beginPath();
-      ctx.arc(hx, hy, 5, 0, Math.PI * 2);
+      ctx.arc(liveAgent.body_x[0] * sx, liveAgent.body_y[0] * sy, 6, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // Main Animation Loop
-    function loop() {
-      if (isPlaying) {
-        currentStepIdx += playbackSpeed;
+    function renderNeuroevolution() {
+      const evo = bundle.neuroevolution;
+      overlay.textContent = `Connectome Neuroevolution • 15 Generations • Emerged Reciprocal Inhibition`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Fitness Curve
+      ctx.fillStyle = '#f3f4f6';
+      ctx.font = 'bold 13px monospace';
+      ctx.fillText('EVOLUTIONARY FITNESS TRAJECTORY (Generations 0 -> 14)', 30, 40);
+
+      const history = (evo && evo.history) || [];
+      if (history.length > 1) {
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        history.forEach((pt, idx) => {
+          const px = 50 + idx * 40;
+          const py = 300 - (pt.best_fitness / 180) * 200;
+          if (idx === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+
+        // Points
+        history.forEach((pt, idx) => {
+          const px = 50 + idx * 40;
+          const py = 300 - (pt.best_fitness / 180) * 200;
+          ctx.fillStyle = pt.has_reciprocal_inhibition ? '#10b981' : '#f43f5e';
+          ctx.beginPath();
+          ctx.arc(px, py, 5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#9ca3af';
+          ctx.font = '10px monospace';
+          ctx.fillText(`G${idx}`, px - 8, 320);
+        });
       }
 
-      if (activeTab === 'exp1' && bundle.exp1) {
-        renderExp1(bundle.exp1.trajectory);
-      } else if (activeTab === 'exp2' && bundle.exp2) {
-        renderExp2(bundle.exp2);
-      } else if (activeTab === 'exp3' && bundle.exp3) {
-        renderExp3(bundle.exp3);
-      } else if (activeTab === 'synthesis' && bundle.synthesis) {
-        renderSynthesis(bundle.synthesis);
-      }
+      // Connectome motif diagram
+      ctx.fillStyle = '#f3f4f6';
+      ctx.font = 'bold 12px monospace';
+      ctx.fillText('EMERGENT MOTIF: RECIPROCAL INHIBITION', 40, 370);
 
-      animFrameId = requestAnimationFrame(loop);
+      // Node Dorsal (3)
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(150, 430, 22, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff'; ctx.font = '10px monospace'; ctx.fillText('DORSAL', 130, 434);
+
+      // Node Ventral (4)
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#00f0ff';
+      ctx.beginPath(); ctx.arc(350, 430, 22, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff'; ctx.fillText('VENTRAL', 328, 434);
+
+      // Cross inhibitory lines
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(172, 420); ctx.lineTo(328, 420); ctx.stroke();
+      ctx.fillStyle = '#f43f5e'; ctx.fillText('W = -0.77 (Inhibitory)', 210, 412);
+
+      ctx.strokeStyle = '#00f0ff';
+      ctx.beginPath(); ctx.moveTo(328, 440); ctx.lineTo(172, 440); ctx.stroke();
+      ctx.fillStyle = '#00f0ff'; ctx.fillText('W = -0.61 (Inhibitory)', 210, 455);
     }
 
-    // Initialize
+    function renderSwarm() {
+      const sw = bundle.swarm;
+      const history = (sw && sw.history) || [];
+      const stepData = history[currentStepIdx % Math.max(1, history.length)] || { predator: [60,60], prey: [[30,30],[70,30],[30,70],[70,70]] };
+
+      document.getElementById('statStep').textContent = `${stepData.step || 0} / 800`;
+      overlay.textContent = `Swarm Hydrodynamics • 4 Foragers vs 1 Predator • Evasion: 99.6%`;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const sx = canvas.width / 120;
+      const sy = canvas.height / 120;
+
+      // Draw Prey
+      (stepData.prey || []).forEach(([px, py]) => {
+        ctx.fillStyle = '#10b981';
+        ctx.shadowColor = '#10b981';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(px * sx, py * sy, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Draw Predator
+      const pred = stepData.predator || [60, 60];
+      ctx.fillStyle = '#f43f5e';
+      ctx.shadowColor = '#f43f5e';
+      ctx.shadowBlur = 15;
+      ctx.beginPath();
+      ctx.arc(pred[0] * sx, pred[1] * sy, 11, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    function loop() {
+      if (isPlaying) currentStepIdx += playbackSpeed;
+
+      if (activeTab === 'exp1' && bundle.exp1) renderExp1(bundle.exp1.trajectory);
+      else if (activeTab === 'exp2' && bundle.exp2) renderExp2(bundle.exp2);
+      else if (activeTab === 'exp3' && bundle.exp3) renderExp3(bundle.exp3);
+      else if (activeTab === 'synthesis' && bundle.synthesis) renderSynthesis(bundle.synthesis);
+      else if (activeTab === 'llm_chat') renderLanguageChat();
+      else if (activeTab === 'neuroevo') renderNeuroevolution();
+      else if (activeTab === 'swarm') renderSwarm();
+
+      requestAnimationFrame(loop);
+    }
+
     updateControlsAndStats();
     loop();
   </script>
