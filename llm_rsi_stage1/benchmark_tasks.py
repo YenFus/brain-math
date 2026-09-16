@@ -200,4 +200,63 @@ assert binary_search([5], 5) == 0
 assert binary_search([], 5) == -1
 """
     ),
+    CodingTask(
+        task_id="task_16",
+        name="Coin Change (DP)",
+        prompt="Write a Python function `coin_change(coins: list[int], amount: int) -> int` that returns the fewest number of coins needed to make up `amount`. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume infinite supply of each coin.",
+        function_name="coin_change",
+        unit_tests="""
+assert coin_change([1, 2, 5], 11) == 3
+assert coin_change([2], 3) == -1
+assert coin_change([1], 0) == 0
+assert coin_change([2, 5, 10, 1], 27) == 4
+"""
+    ),
+    CodingTask(
+        task_id="task_17",
+        name="Evaluate Reverse Polish Notation",
+        prompt="Write a Python function `eval_rpn(tokens: list[str]) -> int` that evaluates the value of an arithmetic expression in Reverse Polish Notation. Valid operators are '+', '-', '*', and '/'. Division truncates toward zero (e.g. int(a / b)).",
+        function_name="eval_rpn",
+        unit_tests="""
+assert eval_rpn(["2", "1", "+", "3", "*"]) == 9
+assert eval_rpn(["4", "13", "5", "/", "+"]) == 6
+assert eval_rpn(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]) == 22
+"""
+    ),
+    CodingTask(
+        task_id="task_18",
+        name="Longest Consecutive Sequence",
+        prompt="Write a Python function `longest_consecutive(nums: list[int]) -> int` that returns the length of the longest consecutive elements sequence in an unsorted array of integers. Must run in O(n) time.",
+        function_name="longest_consecutive",
+        unit_tests="""
+assert longest_consecutive([100, 4, 200, 1, 3, 2]) == 4
+assert longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]) == 9
+assert longest_consecutive([]) == 0
+assert longest_consecutive([1]) == 1
+"""
+    ),
+    CodingTask(
+        task_id="task_19",
+        name="Trapping Rain Water",
+        prompt="Write a Python function `trap_rain_water(height: list[int]) -> int` that computes how much water an elevation map can trap after raining.",
+        function_name="trap_rain_water",
+        unit_tests="""
+assert trap_rain_water([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]) == 6
+assert trap_rain_water([4, 2, 0, 3, 2, 5]) == 9
+assert trap_rain_water([]) == 0
+assert trap_rain_water([1, 2, 3]) == 0
+"""
+    ),
+    CodingTask(
+        task_id="task_20",
+        name="Word Break",
+        prompt="Write a Python function `word_break(s: str, word_dict: list[str]) -> bool` that returns True if string `s` can be segmented into a space-separated sequence of one or more dictionary words, and False otherwise. Words in the dictionary may be reused multiple times.",
+        function_name="word_break",
+        unit_tests="""
+assert word_break("leetcode", ["leet", "code"]) == True
+assert word_break("applepenapple", ["apple", "pen"]) == True
+assert word_break("catsandog", ["cats", "dog", "sand", "and", "cat"]) == False
+assert word_break("", ["a"]) == True
+"""
+    ),
 ]

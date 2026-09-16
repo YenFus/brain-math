@@ -32,14 +32,16 @@ def run_stage1_loop(
     samples_per_task: int = 2,
     use_mock: bool = False,
     model_id: str = "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit",
-    max_tasks: int = 8
+    start_task: int = 0,
+    max_tasks: int = 8,
+    append_dataset: bool = False
 ) -> Dict:
     print("=" * 80)
     print("🤖 STAGE 1 LLM SELF-IMPROVEMENT PIPELINE: VERIFIABLE REASONER (STaR / RLVR)")
     print("=" * 80)
     print(f"  • Model Architecture : {model_id if not use_mock else 'Mock (Offline Verification)'}")
     print(f"  • Verification Engine: Isolated Subprocess Sandbox (3.0s Timeout)")
-    print(f"  • Benchmark Tasks    : {min(max_tasks, len(BENCHMARK_TASKS))} tasks x {samples_per_task} rollouts/task")
+    print(f"  • Benchmark Tasks    : Index {start_task} to {start_task + max_tasks} ({samples_per_task} rollouts/task)")
     print(f"  • Scaffolding Level  : Stage 1 (Improvement-Execution Autonomy)")
     print("=" * 80 + "\n")
 
@@ -57,7 +59,7 @@ def run_stage1_loop(
     data_dir.mkdir(parents=True, exist_ok=True)
     dataset_file = data_dir / "verified_training_traces.jsonl"
 
-    tasks = BENCHMARK_TASKS[:max_tasks]
+    tasks = BENCHMARK_TASKS[start_task:start_task + max_tasks]
     verified_traces = []
     total_rollouts = 0
     total_passed = 0
@@ -71,7 +73,7 @@ def run_stage1_loop(
 
         for sample_idx in range(samples_per_task):
             total_rollouts += 1
-            temp = 0.2 + (0.3 * sample_idx)  # Anneal temperature for multi-attempt diversity
+            temp = 0.2 + (0.3 * sample_idx)
 
             if use_mock:
                 rollout = generator.generate_candidate(task.task_id, temperature=temp)
@@ -83,7 +85,6 @@ def run_stage1_loop(
                 failure_counts["SYNTAX_ERROR"] += 1
                 continue
 
-            # External Sandboxed Verification
             res: VerificationResult = verify_solution(rollout.extracted_code, task.unit_tests)
 
             if res.passed:
@@ -91,7 +92,6 @@ def run_stage1_loop(
                 task_passed_any = True
                 print(f"    • Sample {sample_idx+1}: ✅ PASSED ({res.execution_time_sec:.3f}s) -> Added to Curated Dataset")
 
-                # Store clean training trace (format ready for SFT / LoRA)
                 trace_entry = {
                     "task_id": task.task_id,
                     "name": task.name,
@@ -113,8 +113,9 @@ def run_stage1_loop(
     elapsed_total = round(time.time() - start_time, 2)
     pass_rate_pct = round((total_passed / max(1, total_rollouts)) * 100.0, 1)
 
-    # Write verified dataset
-    with open(dataset_file, "w", encoding="utf-8") as f:
+    # Write verified dataset (append or overwrite)
+    mode = "a" if append_dataset else "w"
+    with open(dataset_file, mode, encoding="utf-8") as f:
         for trace in verified_traces:
             f.write(json.dumps(trace) + "\n")
 
@@ -155,8 +156,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Stage 1 LLM Self-Improvement Pipeline.")
     parser.add_argument("--mock", action="store_true", help="Run in mock mode for instant offline validation.")
     parser.add_argument("--model", type=str, default="mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit", help="Model ID.")
+    parser.add_argument("--start", type=int, default=0, help="Start task index.")
     parser.add_argument("--tasks", type=int, default=8, help="Number of tasks to evaluate.")
     parser.add_argument("--samples", type=int, default=2, help="Rollout samples per task.")
+    parser.add_argument("--append", action="store_true", help="Append to existing verified traces.")
     args = parser.parse_args()
 
     run_stage1_loop(
@@ -164,5 +167,7 @@ if __name__ == "__main__":
         samples_per_task=args.samples,
         use_mock=args.mock,
         model_id=args.model,
-        max_tasks=args.tasks
+        start_task=args.start,
+        max_tasks=args.tasks,
+        append_dataset=args.append
     )
