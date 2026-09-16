@@ -1,8 +1,13 @@
 # brainmodel — Bio-Mathematical Brain & Embodied Connectome Suite
 
-A multi-scale, dependency-light (pure NumPy + Apple Silicon Metal) computational neuroscience framework, autonomous self-improving cognitive agent, and physical connectome embodiment suite.
+> 💡 **New to this folder?** Check out the clear, human-readable **[Project & Directory Guide](PROJECT_GUIDE.md)** for a simple map of all folders and how to run each demo!
+> 
+> You can also launch the **interactive browser dashboard** directly without any setup:
+> ```bash
+> open visualizer/neuroai_dashboard.html
+> ```
 
-Every brain structure is a class holding its governing mathematical equations; they are wired into a coherent biological `Brain` running end-to-end; every neurological disorder is a parameter perturbation of the healthy model; and the system features an autonomous embodied loop with an interactive 60 FPS visual dashboard.
+A dependency-light (pure NumPy) computational neuroscience framework and physical connectome simulation suite.
 
 ```bash
 # 1. Run the foundational whole-brain & pathology validation (12 disorders)
