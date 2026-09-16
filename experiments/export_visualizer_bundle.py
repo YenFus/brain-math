@@ -42,6 +42,20 @@ if swarm_file.exists():
     with open(swarm_file, "r") as f:
         bundle["swarm"] = json.load(f)
 
+fep_file = Path(__file__).resolve().parent.parent / "active_inference" / "data" / "fep_benchmark_results.json"
+cond_file = Path(__file__).resolve().parent.parent / "hebbian_plasticity" / "data" / "conditioning_results.json"
+fly_file = Path(__file__).resolve().parent.parent / "drosophila_fly" / "data" / "fly_telemetry.json"
+
+if fep_file.exists():
+    with open(fep_file, "r") as f:
+        bundle["active_inference"] = json.load(f)
+if cond_file.exists():
+    with open(cond_file, "r") as f:
+        bundle["hebbian_conditioning"] = json.load(f)
+if fly_file.exists():
+    with open(fly_file, "r") as f:
+        bundle["drosophila_fly"] = json.load(f)
+
 js_content = f"// Auto-generated telemetry data bundle\nwindow.TELEMETRY_BUNDLE = {json.dumps(bundle)};\n"
 
 with open(vis_dir / "data.js", "w", encoding="utf-8") as f:
