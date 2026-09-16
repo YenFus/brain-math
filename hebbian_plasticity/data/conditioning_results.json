@@ -1,0 +1,49 @@
+{
+  "trials": [
+    {
+      "phase": "pre_test",
+      "weight": 0.0,
+      "reversal_rate": 0
+    },
+    {
+      "phase": "conditioning_trial_1",
+      "weight": 1.6237579638306774,
+      "reversals": 96
+    },
+    {
+      "phase": "conditioning_trial_2",
+      "weight": 2.0976764100481993,
+      "reversals": 150
+    },
+    {
+      "phase": "conditioning_trial_3",
+      "weight": 2.0976764100481993,
+      "reversals": 150
+    },
+    {
+      "phase": "conditioning_trial_4",
+      "weight": 2.0976764100481993,
+      "reversals": 150
+    },
+    {
+      "phase": "conditioning_trial_5",
+      "weight": 2.0976764100481993,
+      "reversals": 150
+    },
+    {
+      "phase": "recall_test",
+      "weight": 0.21796103489997942,
+      "reversal_rate": 100
+    },
+    {
+      "phase": "extinction",
+      "weight": 0.0,
+      "reversal_rate": 0
+    }
+  ],
+  "initial_weight": 0.04,
+  "peak_conditioned_weight": 2.098,
+  "post_extinction_weight": 0.0,
+  "pre_test_reversal_pct": 0,
+  "post_test_reversal_pct": 100
+}

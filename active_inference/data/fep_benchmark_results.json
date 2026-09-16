@@ -1,0 +1,17 @@
+{
+  "active_inference": {
+    "model": "active_inference_fep",
+    "food_eaten": 0,
+    "collisions": 9,
+    "total_distance": 105.9,
+    "mean_free_energy": 2.949,
+    "efficiency": 0.0
+  },
+  "q_learning": {
+    "model": "standard_q_learning",
+    "food_eaten": 0,
+    "collisions": 16,
+    "total_distance": 86.75,
+    "efficiency": 0.0
+  }
+}
