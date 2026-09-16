@@ -49,6 +49,7 @@ Here is what each folder in this project contains:
 | `neuroevolution/` | Evolving neural circuits from scratch | `python3 neuroevolution/evolve_connectome.py` |
 | `swarm/` | Predator and prey swimming in a shared fluid | `python3 swarm/swarm_predator_prey_sim.py` |
 | `theory_of_mind/` | The Sally-Anne false-belief perspective task | `python3 theory_of_mind/sally_anne_experiment.py` |
+| `llm_rsi_stage1/` | Stage 1 LLM Self-Improvement Pipeline (Qwen2.5-Coder-1.5B) | `python3 llm_rsi_stage1/self_improvement_loop.py` |
 
 ---
 

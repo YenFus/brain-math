@@ -1,0 +1,16 @@
+{
+  "model_id": "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit",
+  "total_rollouts": 4,
+  "total_passed": 4,
+  "pass_rate_pct": 100.0,
+  "failure_counts": {
+    "SYNTAX_ERROR": 0,
+    "ASSERTION_ERROR": 0,
+    "TIMEOUT": 0,
+    "SECURITY_BLOCKED": 0,
+    "OTHER": 0
+  },
+  "curated_dataset_samples": 4,
+  "dataset_path": "/Users/mohit/Projects/Brain Math/llm_rsi_stage1/data/verified_training_traces.jsonl",
+  "execution_time_sec": 8.33
+}
